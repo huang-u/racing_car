@@ -140,6 +140,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             car_direction = 1;
             break;
         }
+        case Qt::Key_Space:
+        {
+            game_pause();
+            break;
+        }
     }
 }
 
@@ -217,4 +222,24 @@ bool MainWindow::is_collision(int x, int y)
         }
     }
     return false;
+}
+
+void MainWindow::game_pause()
+{
+    if(game_status == 1)
+    {
+        game_status = 2;
+        clock_timer->stop();
+        object_timer->stop();
+        ui->label_title->setPixmap(QPixmap(":/src/game_pause.png"));
+        ui->label_title->setVisible(true);
+    }
+
+    else if(game_status == 2)
+    {
+        game_status = 1;
+        clock_timer->start(1000);
+        object_timer->start(10);
+        ui->label_title->setVisible(false);
+    }
 }
