@@ -137,6 +137,114 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLabel" name="block_01">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>40</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="images.qrc">:/src/item1.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="block_02">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>110</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="images.qrc">:/src/item2.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="block_03">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>180</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="images.qrc">:/src/item3.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="block_06">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>410</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="images.qrc">:/src/item1.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="block_05">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>340</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="images.qrc">:/src/item2.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="block_04">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>260</y>
+      <width>64</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="images.qrc">:/src/item3.png</pixmap>
+    </property>
+   </widget>
+   <zorder>background</zorder>
+   <zorder>block_06</zorder>
+   <zorder>block_05</zorder>
+   <zorder>block_04</zorder>
+   <zorder>block_03</zorder>
+   <zorder>block_02</zorder>
+   <zorder>block_01</zorder>
+   <zorder>car</zorder>
+   <zorder>label_title</zorder>
+   <zorder>pushButton_start_game</zorder>
+   <zorder>label_distance</zorder>
+   <zorder>lcd_clock</zorder>
   </widget>
  </widget>
  <resources>

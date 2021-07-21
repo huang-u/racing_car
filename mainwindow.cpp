@@ -2,7 +2,18 @@
 #include "ui_mainwindow.h"
 #include <QTimer>
 #include <QKeyEvent>
-#include <QDebug>
+#define BLOCK_01_X_POS 300
+#define BLOCK_01_Y_POS 40
+#define BLOCK_02_X_POS 2300
+#define BLOCK_02_Y_POS 110
+#define BLOCK_03_X_POS 900
+#define BLOCK_03_Y_POS 190
+#define BLOCK_04_X_POS 2800
+#define BLOCK_04_Y_POS 260
+#define BLOCK_05_X_POS 1700
+#define BLOCK_05_Y_POS 310
+#define BLOCK_06_X_POS 1500
+#define BLOCK_06_Y_POS 340
 /*
 0 => init 遊戲被開啟時
 1 => playing 遊戲遊玩時
@@ -16,6 +27,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     game_status = 0;
+
+    ui->block_01->setGeometry(QRect(-100, 0, 64, 64));
+    ui->block_02->setGeometry(QRect(-100, 0, 64, 64));
+    ui->block_03->setGeometry(QRect(-100, 0, 64, 64));
+    ui->block_04->setGeometry(QRect(-100, 0, 64, 64));
+    ui->block_05->setGeometry(QRect(-100, 0, 64, 64));
+    ui->block_06->setGeometry(QRect(-100, 0, 64, 64));
 
     //移動物體
     bgm_pos = 0;
@@ -50,6 +68,8 @@ void MainWindow::update_object()
         car_distance += 1;
         ui->label_distance->setText("行駛距離: " + QString::number(car_distance, 'f', 0) + "公尺");  //顯示移動距離
         move_car();
+        move_blocks();
+        detect_blocks();
     }
 }
 
@@ -69,6 +89,15 @@ void MainWindow::game_stop()
 {
     clock_timer->stop();
     object_timer->stop();
+
+    if(game_status == 3)//timeout
+        ui->label_title->setPixmap(QPixmap(":/src/game_timeout.png"));
+
+    else if(game_status == 4)//die
+        ui->label_title->setPixmap(QPixmap(":/src/game_falied.png"));
+
+    ui->label_title->setVisible(true);
+    ui->pushButton_start_game->setVisible(true);
 }
 
 void MainWindow::on_pushButton_start_game_clicked()
@@ -90,6 +119,11 @@ void MainWindow::game_start()
     car_pos = 220;                                  //重設車位置(中央)
     car_distance = 0;                               //重設移動距離
     car_direction = 0;                              //設定初始方向
+
+    bgm_pos = 0;                                    //重設背景位置
+
+    if(!object_timer->isActive())
+        object_timer->start(10);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -99,13 +133,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Up:
         {
             car_direction = -1;
-            qDebug() << "up";
             break;
         }
         case Qt::Key_Down:
         {
             car_direction = 1;
-            qDebug() << "down";
             break;
         }
     }
@@ -126,4 +158,63 @@ void MainWindow::move_car()
         game_status = 4;    //die
         game_stop();
     }
+}
+
+void MainWindow::move_blocks()
+{
+    ui->block_01->setGeometry(QRect(BLOCK_01_X_POS - car_distance, BLOCK_01_Y_POS, 64, 64));
+    ui->block_02->setGeometry(QRect(BLOCK_02_X_POS - car_distance, BLOCK_02_Y_POS, 64, 64));
+    ui->block_03->setGeometry(QRect(BLOCK_03_X_POS - car_distance, BLOCK_03_Y_POS, 64, 64));
+    ui->block_04->setGeometry(QRect(BLOCK_04_X_POS - car_distance, BLOCK_04_Y_POS, 64, 64));
+    ui->block_05->setGeometry(QRect(BLOCK_05_X_POS - car_distance, BLOCK_05_Y_POS, 64, 64));
+    ui->block_06->setGeometry(QRect(BLOCK_06_X_POS - car_distance, BLOCK_06_Y_POS, 64, 64));
+}
+
+void MainWindow::detect_blocks()
+{
+    int tmp_padding_x,tmp_padding_y;
+
+    tmp_padding_x = BLOCK_01_X_POS - car_distance;
+    tmp_padding_y = BLOCK_01_Y_POS - ui->car->y();
+    if(is_collision(tmp_padding_x,tmp_padding_y))
+        return;
+
+    tmp_padding_x = BLOCK_02_X_POS - car_distance;
+    tmp_padding_y = BLOCK_02_Y_POS - ui->car->y();
+    if(is_collision(tmp_padding_x,tmp_padding_y))
+        return;
+
+    tmp_padding_x = BLOCK_03_X_POS - car_distance;
+    tmp_padding_y = BLOCK_03_Y_POS - ui->car->y();
+    if(is_collision(tmp_padding_x,tmp_padding_y))
+        return;
+
+    tmp_padding_x = BLOCK_04_X_POS - car_distance;
+    tmp_padding_y = BLOCK_04_Y_POS - ui->car->y();
+    if(is_collision(tmp_padding_x,tmp_padding_y))
+        return;
+
+    tmp_padding_x = BLOCK_05_X_POS - car_distance;
+    tmp_padding_y = BLOCK_05_Y_POS - ui->car->y();
+    if(is_collision(tmp_padding_x,tmp_padding_y))
+        return;
+
+    tmp_padding_x = BLOCK_06_X_POS - car_distance;
+    tmp_padding_y = BLOCK_06_Y_POS - ui->car->y();
+    if(is_collision(tmp_padding_x,tmp_padding_y))
+        return;
+}
+
+bool MainWindow::is_collision(int x, int y)
+{
+    if(x<247 && x>-50)
+    {
+        if(y<55 && y>-55)
+        {
+            game_status = 4;
+            game_stop();
+            return true;
+        }
+    }
+    return false;
 }
